@@ -1,0 +1,70 @@
+[gd_scene load_steps=10 format=3 uid="uid://up67owqwline"]
+
+[ext_resource type="Script" path="res://scripts/mob.gd" id="1_87umn"]
+[ext_resource type="Texture2D" uid="uid://b85dftk4tl2uj" path="res://assets/art/enemyFlyingAlt_1.png" id="1_tbkk1"]
+[ext_resource type="Texture2D" uid="uid://c36tfa5l2021u" path="res://assets/art/enemyFlyingAlt_2.png" id="2_5xq8q"]
+[ext_resource type="Texture2D" uid="uid://cv4etqf2gywyv" path="res://assets/art/enemySwimming_1.png" id="3_stjw0"]
+[ext_resource type="Texture2D" uid="uid://c1xtc18yerhf3" path="res://assets/art/enemySwimming_2.png" id="4_n54de"]
+[ext_resource type="Texture2D" uid="uid://d11tfsmdjoxyc" path="res://assets/art/enemyWalking_1.png" id="5_yndgj"]
+[ext_resource type="Texture2D" uid="uid://c767aam3atuj8" path="res://assets/art/enemyWalking_2.png" id="6_vaqdx"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8uctj"]
+radius = 62.7673
+height = 185.616
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p75kn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_tbkk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_5xq8q")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_stjw0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_n54de")
+}],
+"loop": true,
+"name": &"swim",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_yndgj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_vaqdx")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 3.0
+}]
+
+[node name="Mob" type="RigidBody2D" groups=["mobs"]]
+scale = Vector2(1, 0.979723)
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_87umn")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = -1.57675
+scale = Vector2(0.780543, 0.710048)
+shape = SubResource("CapsuleShape2D_8uctj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_p75kn")
+animation = &"swim"
+speed_scale = 0.75
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
